@@ -1,0 +1,3 @@
+[submodule "demumble"]
+	path = demumble
+	url = git@github.com:nico/demumble.git
