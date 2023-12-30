@@ -12,18 +12,19 @@ pydemangler_demangle(
 	(void)(self);
 
 	const char* input;
+	size_t dummy = 0;
 
 	if (!PyArg_Parse(args, "s", &input))
 	{
 		Py_RETURN_NONE;
 	}
 
-	if (char* output = llvm::itaniumDemangle(input, NULL, NULL, NULL)) {
+	if (char* output = llvm::itaniumDemangle(input)) {
 		PyObject* result = Py_BuildValue("s", output);
 		free(output);
 		return result;
 	}
-	else if (char* output = llvm::microsoftDemangle(input, NULL, NULL, NULL)) {
+	else if (char* output = llvm::microsoftDemangle(input, &dummy, NULL)) {
 		PyObject* result = Py_BuildValue("s", output);
 		free(output);
 		return result;
