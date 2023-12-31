@@ -10,9 +10,12 @@ class BuildExt(build_ext):
 	def run(self):
 		if self.plat_name in ('win32','win-amd64'):
 			pydemangler_ext.define_macros.append(('_CRT_SECURE_NO_WARNINGS', '1'))
+			pydemangler_ext.extra_compile_args.append('/std:c++17')
 			pydemangler_ext.extra_compile_args.append('/wd4244')
-		elif 'macosx' in self.plat_name:
-			pydemangler_ext.extra_compile_args.append('-mmacosx-version-min=10.9')
+		else:
+			pydemangler_ext.extra_compile_args.append('-std=c++17')
+			if 'macosx' in self.plat_name:
+				pydemangler_ext.extra_compile_args.append('-mmacosx-version-min=10.9')
 
 		build_ext.run(self)
 
